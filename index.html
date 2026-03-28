@@ -877,6 +877,18 @@
     .color-4 { background: linear-gradient(135deg, #f7971e, #ffd200); }
     .color-5 { background: linear-gradient(135deg, #11998e, #38ef7d); }
     .color-6 { background: linear-gradient(135deg, #ee0979, #ff6a00); }
+    .color-7 { background: linear-gradient(135deg, #0055a5, #0077cc, #00aaff); }
+
+    /* Portfolio real image card */
+    .portfolio-image-real {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .portfolio-card:hover .portfolio-image-real {
+      transform: scale(1.07);
+    }
 
     /* ===== CONTACT ===== */
     #contact { background: var(--bg-secondary); }
@@ -915,25 +927,86 @@
     }
     .contact-card-label { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 2px; }
     .contact-card-value { font-size: 0.95rem; font-weight: 600; }
-    .social-links { display: flex; gap: 12px; margin-top: 32px; }
+    .social-links { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
     .social-link {
-      width: 44px; height: 44px;
-      border-radius: 12px;
+      width: 52px; height: 52px;
+      border-radius: 14px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
       text-decoration: none;
+      position: relative;
+      overflow: hidden;
     }
+    .social-link svg { width: 24px; height: 24px; transition: transform 0.3s ease; position: relative; z-index: 1; }
+    .social-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    /* Instagram brand gradient */
+    .social-link.insta::before {
+      background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+    .social-link.insta svg { fill: var(--text-secondary); }
+    .social-link.insta:hover::before { opacity: 1; }
+    .social-link.insta:hover svg { fill: #ffffff; transform: scale(1.15) rotate(-5deg); }
+    /* YouTube brand red */
+    .social-link.yt::before { background: linear-gradient(135deg, #ff0000, #cc0000); }
+    .social-link.yt svg { fill: var(--text-secondary); }
+    .social-link.yt:hover::before { opacity: 1; }
+    .social-link.yt:hover svg { fill: #ffffff; transform: scale(1.15); }
+    /* Shared hover lift */
     .social-link:hover {
-      background: linear-gradient(135deg, var(--accent), #ff8c5a);
       border-color: transparent;
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px var(--accent-glow);
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
     }
+    /* Tooltip label */
+    .social-link .soc-tip {
+      position: absolute;
+      bottom: -34px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      padding: 3px 10px;
+      border-radius: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, bottom 0.25s ease;
+      z-index: 10;
+    }
+    .social-link:hover .soc-tip { opacity: 1; bottom: -30px; }
+    /* Footer social icons (smaller) */
+    .footer-social { display: flex; gap: 10px; }
+    .footer-social-link {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+    .footer-social-link svg { width: 18px; height: 18px; transition: all 0.3s ease; position: relative; z-index: 1; fill: var(--text-secondary); }
+    .footer-social-link::before { content: ''; position: absolute; inset: 0; border-radius: 10px; opacity: 0; transition: opacity 0.3s ease; }
+    .footer-social-link.insta::before { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .footer-social-link.yt::before { background: linear-gradient(135deg, #ff0000, #cc0000); }
+    .footer-social-link:hover::before { opacity: 1; }
+    .footer-social-link:hover svg { fill: #fff; transform: scale(1.1); }
+    .footer-social-link:hover { border-color: transparent; transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.3); }
     /* Contact Form */
     .contact-form { display: flex; flex-direction: column; gap: 20px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -989,6 +1062,17 @@
       font-weight: 600;
     }
     .form-success.show { display: block; }
+    .form-error {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      background: rgba(255, 80, 80, 0.1);
+      border: 1px solid rgba(255, 80, 80, 0.35);
+      border-radius: 12px;
+      color: #ff6b6b;
+      font-weight: 600;
+    }
+    .form-error.show { display: block; }
 
     /* ===== FOOTER ===== */
     footer {
@@ -1002,6 +1086,10 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 20px;
+    }
+    @media (max-width: 640px) {
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+      .footer-social { justify-content: center; }
     }
     .footer-logo { font-size: 1.3rem; font-weight: 900; }
     .footer-copy { font-size: 0.85rem; color: var(--text-secondary); }
@@ -1140,16 +1228,16 @@
           </div>
           <div class="hero-stats">
             <div class="stat-item">
-              <div class="stat-num">50+</div>
+              <div class="stat-num">10+</div>
               <div class="stat-label">Projects Done</div>
             </div>
             <div class="stat-item">
-              <div class="stat-num">30+</div>
-              <div class="stat-label">Happy Clients</div>
+              <div class="stat-num">1</div>
+              <div class="stat-label">Current Project</div>
             </div>
             <div class="stat-item">
-              <div class="stat-num">3+</div>
-              <div class="stat-label">Years Experience</div>
+              <div class="stat-num">1+</div>
+              <div class="stat-label">Year Experience</div>
             </div>
           </div>
         </div>
@@ -1417,6 +1505,7 @@
           <button class="filter-btn" data-filter="branding">Branding</button>
           <button class="filter-btn" data-filter="social">Social</button>
           <button class="filter-btn" data-filter="print">Print</button>
+          <button class="filter-btn" data-filter="packaging">Packaging</button>
         </div>
       </div>
 
@@ -1553,7 +1642,171 @@
             <div class="portfolio-footer">
               <div class="portfolio-tags">
                 <span class="portfolio-tag">Social</span>
-                <span class="portfolio-tag">F&amp;B</span>
+                <span class="portfolio-tag">F&B</span>
+              </div>
+              <div class="portfolio-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== REAL PROJECT: Ultra Wash ===== -->
+        <div class="portfolio-card aos" data-category="packaging">
+          <div class="portfolio-image" style="overflow:hidden; position:relative; background:#0a4fa8;">
+            <!-- Canvas-rendered Ultra Wash preview -->
+            <canvas id="ultraWashCanvas" width="640" height="440" style="width:100%;height:100%;display:block;"></canvas>
+            <div class="portfolio-overlay">
+              <button class="overlay-btn">View Project</button>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-cat">Packaging Design</div>
+            <h3 class="portfolio-title">Ultra Wash — Laundry Detergent</h3>
+            <p class="portfolio-desc">Bold and vibrant product packaging design for Ultra Wash Laundry Detergent — featuring dynamic circular branding with energetic color gradients for high shelf impact.</p>
+            <div class="portfolio-footer">
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">Packaging</span>
+                <span class="portfolio-tag">Branding</span>
+                <span class="portfolio-tag">Product</span>
+              </div>
+              <div class="portfolio-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== REAL PROJECT: Giftechies Graphic Design Poster ===== -->
+        <div class="portfolio-card aos" data-category="social print">
+          <div class="portfolio-image" style="overflow:hidden; position:relative; background:#111;">
+            <!-- Giftechies Poster — CSS art recreation -->
+            <div id="giftechiesPoster" style="
+              width:100%; height:220px;
+              background: radial-gradient(ellipse at center, #2a2a2a 0%, #111 60%, #0a0a0a 100%);
+              display:flex; flex-direction:column;
+              align-items:center; justify-content:center;
+              position:relative; overflow:hidden;
+              font-family:'Segoe UI',sans-serif;
+              padding: 12px 16px;
+            ">
+              <!-- Leather texture overlay -->
+              <div style="
+                position:absolute; inset:0;
+                background: repeating-linear-gradient(
+                  0deg, transparent, transparent 2px,
+                  rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
+                );
+                pointer-events:none;
+              "></div>
+
+              <!-- Giftechies logo text top -->
+              <div style="
+                position:absolute; top:10px;
+                display:flex; flex-direction:column; align-items:center; gap:2px;
+              ">
+                <div style="
+                  font-size:0.72rem; font-weight:900; letter-spacing:1px;
+                  color:#e0e0e0; text-transform:lowercase;
+                  display:flex; align-items:center; gap:2px;
+                ">
+                  <span style="color:#e63946; font-size:1rem; font-style:italic;">g</span><span>iftechies</span>
+                </div>
+                <div style="
+                  font-size:0.38rem; letter-spacing:1.5px; text-transform:uppercase;
+                  color:#aaa; font-weight:500;
+                ">Where Innovation Meets The Real World</div>
+                <!-- decorative line -->
+                <div style="width:60px; height:1px; background:linear-gradient(90deg,transparent,#e63946,transparent); margin-top:2px;"></div>
+              </div>
+
+              <!-- GRAPHIC DESIGN big text -->
+              <div style="
+                font-size:clamp(1.3rem,4vw,1.65rem);
+                font-weight:900;
+                text-transform:uppercase;
+                letter-spacing:2px;
+                text-align:center;
+                line-height:1;
+                margin-bottom:2px;
+                background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 40%, #888 100%);
+                -webkit-background-clip:text;
+                -webkit-text-fill-color:transparent;
+                background-clip:text;
+                text-shadow:none;
+                filter: drop-shadow(0 0 6px rgba(255,255,255,0.18));
+                position:relative; z-index:2;
+              ">Graphic Design</div>
+
+              <!-- Subtitle -->
+              <div style="
+                font-size:0.55rem; letter-spacing:3px; text-transform:uppercase;
+                color:#ccc; margin-bottom:12px; font-weight:500;
+                position:relative; z-index:2;
+              ">That Defines Your Brand</div>
+
+              <!-- Hand silhouette + tools icons row -->
+              <div style="
+                display:flex; align-items:center; justify-content:center; gap:10px;
+                position:relative; z-index:2;
+              ">
+                <!-- Ps icon -->
+                <div style="
+                  width:28px; height:28px; border-radius:6px;
+                  background:linear-gradient(135deg,#001e36,#0055a0);
+                  display:flex; align-items:center; justify-content:center;
+                  font-size:0.7rem; font-weight:900; color:#31a8ff;
+                  box-shadow:0 2px 8px rgba(49,168,255,0.4);
+                  font-family:'Arial',sans-serif;
+                ">Ps</div>
+
+                <!-- Center pen tool icon -->
+                <div style="
+                  width:36px; height:36px; border-radius:10px;
+                  background:linear-gradient(135deg,#1a1a1a,#333);
+                  border:1px solid rgba(255,255,255,0.15);
+                  display:flex; align-items:center; justify-content:center;
+                  font-size:1.1rem;
+                  box-shadow:0 4px 12px rgba(0,0,0,0.6);
+                ">✏️</div>
+
+                <!-- Ai icon -->
+                <div style="
+                  width:28px; height:28px; border-radius:6px;
+                  background:linear-gradient(135deg,#2d0a00,#ff6600);
+                  display:flex; align-items:center; justify-content:center;
+                  font-size:0.7rem; font-weight:900; color:#ff9a00;
+                  box-shadow:0 2px 8px rgba(255,102,0,0.4);
+                  font-family:'Arial',sans-serif;
+                ">Ai</div>
+              </div>
+
+              <!-- Contact info bottom -->
+              <div style="
+                position:absolute; bottom:8px;
+                display:flex; gap:14px; align-items:center;
+                font-size:0.38rem; color:#999; letter-spacing:0.5px;
+              ">
+                <span>🌐 www.giftechies.com</span>
+                <span style="color:#444;">|</span>
+                <span>✉️ info@giftechies.com</span>
+              </div>
+
+              <!-- Sparkle dots decorative -->
+              <div style="position:absolute;top:28px;left:18px;width:3px;height:3px;background:#fff;border-radius:50%;opacity:0.7;box-shadow:0 0 4px #fff;"></div>
+              <div style="position:absolute;top:18px;right:22px;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0.5;box-shadow:0 0 3px #fff;"></div>
+              <div style="position:absolute;bottom:40px;left:12px;width:2px;height:2px;background:#e63946;border-radius:50%;opacity:0.6;box-shadow:0 0 4px #e63946;"></div>
+              <div style="position:absolute;bottom:50px;right:14px;width:3px;height:3px;background:#e63946;border-radius:50%;opacity:0.5;box-shadow:0 0 4px #e63946;"></div>
+            </div>
+            <div class="portfolio-overlay">
+              <button class="overlay-btn">View Project</button>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-cat">Poster & Social Media Design</div>
+            <h3 class="portfolio-title">Giftechies — Graphic Design Poster</h3>
+            <p class="portfolio-desc">A striking dark-themed promotional poster for Giftechies agency — showcasing graphic design services with bold typography, tool icons (Ps & Ai), and a premium brand identity layout.</p>
+            <div class="portfolio-footer">
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">Poster</span>
+                <span class="portfolio-tag">Social</span>
+                <span class="portfolio-tag">Branding</span>
               </div>
               <div class="portfolio-arrow">→</div>
             </div>
@@ -1583,14 +1836,18 @@
               <div class="contact-card-icon">📧</div>
               <div>
                 <div class="contact-card-label">Email Address</div>
-                <div class="contact-card-value">zohair@design.com</div>
+                <div class="contact-card-value">
+                  <a href="mailto:zohairvip.com@gmail.com" style="color:inherit; text-decoration:none;">zohairvip.com@gmail.com</a>
+                </div>
               </div>
             </div>
             <div class="contact-card">
               <div class="contact-card-icon">📞</div>
               <div>
                 <div class="contact-card-label">Phone Number</div>
-                <div class="contact-card-value">+92 300 0000000</div>
+                <div class="contact-card-value">
+                  <a href="tel:+923332596664" style="color:inherit; text-decoration:none;">+92 333 2596664</a>
+                </div>
               </div>
             </div>
             <div class="contact-card">
@@ -1602,12 +1859,25 @@
             </div>
           </div>
 
+          <!-- Social Media Links -->
           <div class="social-links">
-            <a href="#" class="social-link" title="Instagram">📸</a>
-            <a href="#" class="social-link" title="Behance">🎨</a>
-            <a href="#" class="social-link" title="Dribbble">🏀</a>
-            <a href="#" class="social-link" title="LinkedIn">💼</a>
-            <a href="#" class="social-link" title="Facebook">👤</a>
+
+            <!-- Instagram -->
+            <a href="#" class="social-link insta" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              <span class="soc-tip">Instagram</span>
+            </a>
+
+            <!-- YouTube -->
+            <a href="https://www.youtube.com/@DesignVerse_YT" class="social-link yt" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+              <span class="soc-tip">YouTube</span>
+            </a>
+
           </div>
         </div>
 
@@ -1639,6 +1909,7 @@
             <div class="form-success" id="formSuccess">
               ✅ Thank you! Your message has been sent. I'll get back to you soon.
             </div>
+            <div class="form-error" id="formError"></div>
           </form>
         </div>
 
@@ -1650,16 +1921,42 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
+
+        <!-- Logo -->
         <div class="footer-logo">Z<span class="accent">.</span></div>
+
+        <!-- Copyright -->
         <div class="footer-copy">
           © <span id="year"></span> <span>Zohair</span>. All Rights Reserved. Made with <span>❤️</span>
         </div>
+
+        <!-- Nav Links -->
         <div class="footer-links">
           <a href="#hero">Home</a>
           <a href="#about">About</a>
           <a href="#portfolio">Work</a>
           <a href="#contact">Contact</a>
         </div>
+
+        <!-- Social Icons -->
+        <div class="footer-social">
+
+          <!-- Instagram -->
+          <a href="#" class="footer-social-link insta" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+
+          <!-- YouTube -->
+          <a href="https://www.youtube.com/@DesignVerse_YT" class="footer-social-link yt" target="_blank" rel="noopener noreferrer" aria-label="Subscribe on YouTube">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+
+        </div>
+
       </div>
     </div>
   </footer>
@@ -1757,8 +2054,8 @@
 
         const filter = btn.getAttribute('data-filter');
         portfolioCards.forEach(card => {
-          const cat = card.getAttribute('data-category');
-          if (filter === 'all' || cat === filter) {
+          const cats = card.getAttribute('data-category').split(' ');
+          if (filter === 'all' || cats.includes(filter)) {
             card.style.display = '';
             card.style.animation = 'fadeIn 0.4s ease forwards';
           } else {
@@ -1768,23 +2065,94 @@
       });
     });
 
-    // ===== CONTACT FORM =====
+    // ===== CONTACT FORM — EmailJS Integration =====
+    // ——————————————————————————————————————————————
+    // SETUP GUIDE (One-time, 5 minutes):
+    // 1. Go to https://www.emailjs.com/ → Sign Up FREE
+    // 2. Dashboard → Email Services → Add New Service → Choose Gmail
+    //    → Connect your Gmail: zohairvip.com@gmail.com → Copy "Service ID"
+    // 3. Dashboard → Email Templates → Create New Template
+    //    → Use these variables in template: {{from_name}}, {{from_email}}, {{subject}}, {{message}}
+    //    → Set "To Email" = zohairvip.com@gmail.com → Save → Copy "Template ID"
+    // 4. Dashboard → Account → Copy your "Public Key"
+    // 5. Paste all 3 values below ↓
+    // ——————————————————————————————————————————————
+    const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // ← Paste here
+    const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // ← Paste here
+    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // ← Paste here
+    // ——————————————————————————————————————————————
+
+    // Load EmailJS SDK dynamically
+    (function loadEmailJS() {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+      script.onload = () => {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      };
+      document.head.appendChild(script);
+    })();
+
     const contactForm = document.getElementById('contactForm');
     const formSuccess = document.getElementById('formSuccess');
+    const formError   = document.getElementById('formError');
 
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const btn = contactForm.querySelector('.form-submit');
-      btn.textContent = 'Sending...';
+      btn.innerHTML = '<span>Sending...</span><span>⏳</span>';
       btn.disabled = true;
+      if (formError) formError.classList.remove('show');
 
-      setTimeout(() => {
+      // Check if EmailJS keys are configured
+      const keysSet = EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' &&
+                      EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' &&
+                      EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID';
+
+      if (!keysSet) {
+        // Fallback: open default email client with pre-filled message
+        const name    = document.getElementById('fname').value;
+        const email   = document.getElementById('femail').value;
+        const subject = document.getElementById('fsubject').value || 'Portfolio Contact';
+        const message = document.getElementById('fmessage').value;
+        const mailBody = `Name: ${name}%0AEmail: ${email}%0A%0A${message}`;
+        window.open(`mailto:zohairvip.com@gmail.com?subject=${encodeURIComponent(subject)}&body=${mailBody}`, '_blank');
         contactForm.reset();
         formSuccess.classList.add('show');
+        formSuccess.textContent = '✅ Your email app has opened! Please click Send in your email app.';
         btn.innerHTML = '<span>Send Message</span><span>✉️</span>';
         btn.disabled = false;
-        setTimeout(() => formSuccess.classList.remove('show'), 5000);
-      }, 1500);
+        setTimeout(() => formSuccess.classList.remove('show'), 6000);
+        return;
+      }
+
+      // Send via EmailJS
+      const templateParams = {
+        from_name:  document.getElementById('fname').value,
+        from_email: document.getElementById('femail').value,
+        subject:    document.getElementById('fsubject').value || 'Portfolio Contact',
+        message:    document.getElementById('fmessage').value,
+        to_email:   'zohairvip.com@gmail.com'
+      };
+
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(() => {
+          contactForm.reset();
+          formSuccess.textContent = '✅ Message sent! I will reply to you soon at zohairvip.com@gmail.com';
+          formSuccess.classList.add('show');
+          btn.innerHTML = '<span>Send Message</span><span>✉️</span>';
+          btn.disabled = false;
+          setTimeout(() => formSuccess.classList.remove('show'), 6000);
+        })
+        .catch((err) => {
+          console.error('EmailJS Error:', err);
+          if (formError) {
+            formError.textContent = '❌ Failed to send. Please email directly: zohairvip.com@gmail.com';
+            formError.classList.add('show');
+            setTimeout(() => formError.classList.remove('show'), 7000);
+          }
+          btn.innerHTML = '<span>Send Message</span><span>✉️</span>';
+          btn.disabled = false;
+        });
     });
 
     // ===== BACK TO TOP =====
@@ -1873,6 +2241,199 @@
     document.querySelectorAll('.portfolio-card').forEach((card, i) => {
       card.style.transitionDelay = `${i * 0.08}s`;
     });
+
+    // ===== ULTRA WASH CANVAS RENDER =====
+    function drawUltraWash() {
+      const canvas = document.getElementById('ultraWashCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height;
+      const cx = W / 2, cy = H / 2;
+
+      // Deep blue background
+      const bgGrad = ctx.createRadialGradient(cx, cy, 60, cx, cy, W * 0.75);
+      bgGrad.addColorStop(0, '#0066cc');
+      bgGrad.addColorStop(0.5, '#0044aa');
+      bgGrad.addColorStop(1, '#001e6e');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Floating bubbles in background
+      const bubblePositions = [
+        {x:60,y:60,r:18}, {x:580,y:50,r:12}, {x:30,y:340,r:10},
+        {x:600,y:360,r:16}, {x:120,y:390,r:8}, {x:520,y:400,r:22},
+        {x:80,y:200,r:14}, {x:560,y:200,r:9}
+      ];
+      bubblePositions.forEach(b => {
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(120,180,255,0.35)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        // highlight glint
+        ctx.beginPath();
+        ctx.arc(b.x - b.r*0.3, b.y - b.r*0.3, b.r*0.25, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.fill();
+      });
+
+      // Outer swirl ring (rainbow gradient)
+      const sweepColors = ['#ff0000','#ff8800','#ffee00','#00cc44','#0099ff','#cc00ff','#ff0000'];
+      for (let s = 0; s < 360; s += 2) {
+        const angle = (s * Math.PI) / 180;
+        const nextAngle = ((s + 2) * Math.PI) / 180;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 155, angle, nextAngle);
+        ctx.strokeStyle = sweepColors[Math.floor(s / 52)];
+        ctx.lineWidth = 10;
+        ctx.stroke();
+      }
+
+      // Silver metallic outer ring
+      const silverGrad = ctx.createLinearGradient(cx - 165, cy, cx + 165, cy);
+      silverGrad.addColorStop(0, '#aaaaaa');
+      silverGrad.addColorStop(0.3, '#eeeeee');
+      silverGrad.addColorStop(0.6, '#bbbbbb');
+      silverGrad.addColorStop(1, '#888888');
+      ctx.beginPath();
+      ctx.arc(cx, cy, 163, 0, Math.PI * 2);
+      ctx.strokeStyle = silverGrad;
+      ctx.lineWidth = 5;
+      ctx.stroke();
+
+      // Blue swirling outer arcs
+      for (let arc = 0; arc < 3; arc++) {
+        ctx.beginPath();
+        ctx.arc(cx + (arc - 1) * 30, cy - 20, 185 - arc * 12, -0.6 + arc * 0.3, Math.PI * 1.2 + arc * 0.2);
+        ctx.strokeStyle = `rgba(80,160,255,${0.4 - arc * 0.1})`;
+        ctx.lineWidth = 3 - arc * 0.5;
+        ctx.stroke();
+      }
+
+      // Main white/silver circle
+      const mainCircGrad = ctx.createRadialGradient(cx - 30, cy - 40, 20, cx, cy, 150);
+      mainCircGrad.addColorStop(0, '#f0f4ff');
+      mainCircGrad.addColorStop(0.5, '#dde8f5');
+      mainCircGrad.addColorStop(1, '#c0d0e8');
+      ctx.beginPath();
+      ctx.arc(cx, cy, 148, 0, Math.PI * 2);
+      ctx.fillStyle = mainCircGrad;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // "Ultra" text - bold red
+      ctx.save();
+      ctx.font = 'bold 72px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      // Red gradient for "Ultra"
+      const redGrad = ctx.createLinearGradient(cx - 80, cy - 60, cx + 80, cy - 20);
+      redGrad.addColorStop(0, '#cc0000');
+      redGrad.addColorStop(0.5, '#ff2222');
+      redGrad.addColorStop(1, '#aa0000');
+      ctx.fillStyle = redGrad;
+      ctx.shadowColor = 'rgba(180,0,0,0.4)';
+      ctx.shadowBlur = 8;
+      ctx.fillText('Ultra', cx, cy - 32);
+      ctx.restore();
+
+      // "WASH" text - bold blue italic
+      ctx.save();
+      ctx.font = 'bold italic 86px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const blueGrad = ctx.createLinearGradient(cx - 100, cy + 20, cx + 100, cy + 65);
+      blueGrad.addColorStop(0, '#0044cc');
+      blueGrad.addColorStop(0.5, '#0088ff');
+      blueGrad.addColorStop(1, '#003399');
+      ctx.fillStyle = blueGrad;
+      ctx.shadowColor = 'rgba(0,80,200,0.5)';
+      ctx.shadowBlur = 10;
+      ctx.fillText('WASH', cx, cy + 32);
+      ctx.restore();
+
+      // "LAUNDRY DETERGENT" label
+      ctx.save();
+      ctx.font = 'bold 16px Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#003399';
+      ctx.letterSpacing = '3px';
+      ctx.fillText('LAUNDRY DETERGENT', cx, cy + 90);
+      ctx.restore();
+
+      // Atom-like molecule decoration (top right of circle)
+      const atomCx = cx + 100, atomCy = cy - 90;
+      // Orbit rings
+      ctx.beginPath();
+      ctx.ellipse(atomCx, atomCy, 38, 15, -0.5, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(100,160,255,0.7)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(atomCx, atomCy, 38, 15, 0.5, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(100,160,255,0.7)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      // Central atom
+      ctx.beginPath();
+      ctx.arc(atomCx, atomCy, 10, 0, Math.PI * 2);
+      const atomGrad = ctx.createRadialGradient(atomCx-3, atomCy-3, 1, atomCx, atomCy, 10);
+      atomGrad.addColorStop(0, '#ff88cc');
+      atomGrad.addColorStop(1, '#cc0088');
+      ctx.fillStyle = atomGrad;
+      ctx.fill();
+      // Satellite atoms
+      const sats = [{x: atomCx+35, y: atomCy-8, r:7, c1:'#66aaff', c2:'#0044cc'},
+                    {x: atomCx-30, y: atomCy+12, r:5, c1:'#88ccff', c2:'#0066aa'}];
+      sats.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        const sg = ctx.createRadialGradient(s.x-2, s.y-2, 1, s.x, s.y, s.r);
+        sg.addColorStop(0, s.c1);
+        sg.addColorStop(1, s.c2);
+        ctx.fillStyle = sg;
+        ctx.fill();
+      });
+
+      // Sparkle dots scattered around
+      const sparkles = [{x:200,y:80},{x:440,y:100},{x:140,y:280},{x:490,y:300}];
+      sparkles.forEach(sp => {
+        ctx.beginPath();
+        ctx.arc(sp.x, sp.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        ctx.fill();
+        // 4-point star
+        [0, 90, 180, 270].forEach(angle => {
+          const rad = angle * Math.PI / 180;
+          ctx.beginPath();
+          ctx.moveTo(sp.x, sp.y);
+          ctx.lineTo(sp.x + Math.cos(rad) * 10, sp.y + Math.sin(rad) * 10);
+          ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+      });
+
+      // Shine highlight on main circle
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, 148, 0, Math.PI * 2);
+      ctx.clip();
+      const shineGrad = ctx.createLinearGradient(cx - 100, cy - 140, cx + 60, cy - 20);
+      shineGrad.addColorStop(0, 'rgba(255,255,255,0.22)');
+      shineGrad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = shineGrad;
+      ctx.fillRect(cx - 150, cy - 150, 300, 160);
+      ctx.restore();
+    }
+
+    // Run after DOM is ready
+    window.addEventListener('load', drawUltraWash);
+    // Also run immediately in case load already fired
+    if (document.readyState === 'complete') drawUltraWash();
   </script>
 
 </body>
